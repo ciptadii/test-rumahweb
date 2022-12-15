@@ -30,8 +30,6 @@ const Register = () => {
         }
     }
 
-    // "639ae9ce833dc26acd3600f5" John Doe
-
     return (
         <Col>
             <Navbar />

@@ -1,8 +1,14 @@
 import React from 'react'
 
+import { Stack, Button } from 'react-bootstrap'
+
 const Navbar = () => {
     return (
-        <h1>Navbar</h1>
+        <Stack direction='horizontal'>
+            <h1 className='me-auto'>Navbar</h1>
+            <Button className='button-submit-login' variant='light'>Logout</Button>
+        </Stack>
+
     )
 }
 
