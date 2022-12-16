@@ -1,9 +1,9 @@
-.login-card-container {
-  min-width: 450px;
+.register-card-container {
+  min-width: 650px;
 }
 
 @media screen and (max-width: 767px) {
-  .login-card-container {
+  .register-card-container {
     min-width: 250px;
     margin-left: 4%;
     margin-right: 4%;
