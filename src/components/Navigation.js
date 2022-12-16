@@ -6,7 +6,7 @@ const Navigation = () => {
     <Navbar fixed='top' bg="dark" variant="dark">
       <Container>
         <Navbar.Brand href="/dashboard">User Manager</Navbar.Brand>
-        <Button className='button-submit-login' variant='light'>Logout</Button>
+        <Button className='button-submit-login' variant='light' href='/'>Logout</Button>
       </Container>
     </Navbar>
   )

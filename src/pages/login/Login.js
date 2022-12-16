@@ -5,15 +5,16 @@ import axios from 'axios';
 
 import './Login.css'
 
-// "639ae9ce833dc26acd3600f5" John Doe
-
 const Login = () => {
 	const [id, setId] = useState('')
 	const [msg, setMsg] = useState('');
+
+	const [validated, setValidated] = useState(false)
+
 	const navigate = useNavigate('');
 
 	const handleSubmit = async e => {
-		e.preventDefault();
+		// e.preventDefault();
 		try {
 			const request = await axios.get('https://dummyapi.io/data/v1/user/' + id, {
 				headers: {
@@ -21,11 +22,26 @@ const Login = () => {
 				},
 			})
 			console.log(request.data)
-			navigate("/dashboard")
+			navigate("/dashboard/" + id)
 		} catch (error) {
 			if (error.response) {
 				setMsg(error.response.data.msg);
 			}
+		}
+	}
+
+	const handleValidate = (e) => {
+		e.preventDefault()
+		const form = e.currentTarget
+		if (form.checkValidity() === false) {
+			e.preventDefault()
+			e.stopPropagation()
+			setValidated(false)
+		}
+
+		setValidated(true)
+		if (id) {
+			handleSubmit()
 		}
 	}
 
@@ -35,12 +51,13 @@ const Login = () => {
 				<Card className='login-card-container'>
 					<Card.Header as="h3">Login</Card.Header>
 					<Card.Body>
-						<Form onSubmit={handleSubmit}>
+						<Form noValidate validated={validated} onSubmit={handleValidate}>
 							<Col>
 								<p className="has-text-centered">{msg}</p>
 								<Form.Group className="mb-3">
 									<Form.Label>User ID</Form.Label>
-									<Form.Control type="text" placeholder='Input Your ID' value={id} onChange={(e) => setId(e.target.value)} />
+									<Form.Control required type="text" placeholder='Input Your ID' value={id} onChange={(e) => setId(e.target.value)} />
+									<Form.Control.Feedback type="invalid">Please input your User ID.</Form.Control.Feedback>
 								</Form.Group>
 								<div className="d-grid gap-2">
 									<Button variant='primary' type='submit'>Login</Button>

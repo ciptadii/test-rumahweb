@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Card, Row, Col, Form, Stack, Button } from 'react-bootstrap'
+import { Card, Row, Col, Form, Stack, Alert, Button } from 'react-bootstrap'
 import axios from 'axios';
 
 import './Register.css'
@@ -9,31 +9,37 @@ const Register = () => {
 	const [lastName, setLastName] = useState('')
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
+	const [datas, setDatas] = useState('')
+
+	const [show, setShow] = useState(false);
+
 	const [validated, setValidated] = useState(false)
 
 	const handleSubmit = async e => {
-		e.preventDefault();
-		console.log('send request')
-		// try {
-		// 	const request = await axios.post('https://dummyapi.io/data/v1/user/create', {
-		// 		firstName: firstName,
-		// 		lastName: lastName,
-		// 		email: email,
-		// 	}, {
-		// 		headers: {
-		// 			'app-id': '6399923633aa47148e74cf90',
-		// 			'Content-Type': 'application/x-www-form-urlencoded'
-		// 		},
-		// 	})
-		// 	console.log(request.data)
-		// } catch (error) {
-		// 	if (error.response) {
-		// 		console.log(error.response)
-		// 	}
-		// }
+		// e.preventDefault();
+		try {
+			const request = await axios.post('https://dummyapi.io/data/v1/user/create', {
+				firstName: firstName,
+				lastName: lastName,
+				email: email,
+			}, {
+				headers: {
+					'app-id': '6399923633aa47148e74cf90',
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
+			})
+			console.log(request.data)
+			setDatas(request.data)
+			setShow(true)
+		} catch (error) {
+			if (error.response) {
+				console.log(error.response)
+			}
+		}
 	}
 
 	const handleValidate = (e) => {
+		e.preventDefault()
 		const form = e.currentTarget
 		if (form.checkValidity() === false) {
 			e.preventDefault()
@@ -41,11 +47,31 @@ const Register = () => {
 		}
 
 		setValidated(true)
+		if (firstName && lastName && email && password) {
+			handleSubmit()
+		}
 	}
+
+	// 639c1ec96870a48589de8ae9 monalisa
 
 	return (
 		<Row className="card-container">
 			<Col md="auto">
+				<Alert show={show} variant="success">
+					<Alert.Heading>Register Success!</Alert.Heading>
+					<h6>Below is your data, save it to login.</h6>
+					<p>Your ID: {datas.id}</p>
+					<p>Name: {datas.firstName} {datas.lastName}</p>
+					<p>Email: {datas.email}</p>
+					<hr />
+					<div className="d-flex justify-content-end">
+						<Button onClick={() => setShow(false)} variant="outline-success">
+							Ok
+						</Button>
+					</div>
+				</Alert>
+
+				{/* {!show && <Button onClick={() => setShow(true)}>Show Alert</Button>} */}
 				<Card className='register-card-container'>
 					<Card.Header as="h3">Register</Card.Header>
 					<Card.Body>
