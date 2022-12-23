@@ -19,7 +19,7 @@ const Dashboard = () => {
   const navigate = useNavigate('');
 
   useEffect(() => {
-    console.log(params.id);
+    // console.log(params.id);
     if (params.id) {
       async function fetchData() {
         const request = await axios.get('https://dummyapi.io/data/v1/user/' + params.id, {
@@ -39,7 +39,7 @@ const Dashboard = () => {
   const handleSave = async e => {
     e.preventDefault();
     try {
-      const request = await axios.put('https://dummyapi.io/data/v1/user/' + params.id, {
+      await axios.put('https://dummyapi.io/data/v1/user/' + params.id, {
         firstName: firstName,
         lastName: lastName,
       }, {
@@ -48,7 +48,7 @@ const Dashboard = () => {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
       })
-      console.log(request.data)
+      // console.log(request.data)
       setShow(true)
     } catch (error) {
       if (error.response) {
@@ -60,13 +60,13 @@ const Dashboard = () => {
   const handleDelete = async e => {
     e.preventDefault();
     try {
-      const request = await axios.delete('https://dummyapi.io/data/v1/user/' + params.id, {
+      await axios.delete('https://dummyapi.io/data/v1/user/' + params.id, {
         headers: {
           'app-id': '6399923633aa47148e74cf90',
         },
       })
       navigate("/")
-      console.log(request.data)
+      // console.log(request.data)
     } catch (error) {
       if (error.response) {
         console.log(error.response)
@@ -89,7 +89,6 @@ const Dashboard = () => {
               <Button className='button-delete' type='submit' variant='danger' onClick={handleDelete}>Delete Account</Button>
             </div>
           </Container>
-
         </Col>
         <Col lg={8} xl={7} className='column-user-edit'>
           <Container className='container-user-edit'>

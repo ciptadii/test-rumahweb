@@ -16,12 +16,12 @@ const Login = () => {
 	const handleSubmit = async e => {
 		// e.preventDefault();
 		try {
-			const request = await axios.get('https://dummyapi.io/data/v1/user/' + id, {
+			await axios.get('https://dummyapi.io/data/v1/user/' + id, {
 				headers: {
 					'app-id': '6399923633aa47148e74cf90'
 				},
 			})
-			console.log(request.data)
+			// console.log(request.data)
 			navigate("/dashboard/" + id)
 		} catch (error) {
 			if (error.response) {
